@@ -1,2 +1,7 @@
+![Hackatime Badge](https://hackatime-badge.hackclub.com/U0812AA7ELD/md-2?color=00a19c)
+![Language Badge](https://img.shields.io/badge/language-Java-5382a1)
 # md-2
-Convert Markdown to HTML
+A Java program to convert Markdown to HTML
+
+## Usage
+Run `md_2_html.java`
