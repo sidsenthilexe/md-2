@@ -33,96 +33,65 @@ public class md_2_html {
             String start_tag = "";
             String end_tag = "";
             String line_data_trimmed = "";
-            String file_content = "";
-            while (read_file.hasNextLine()) {
-                file_content += read_file.nextLine() + System.lineSeparator();
-            }
-            System.out.print(file_content);
 
             write_output.write(html_file_start + System.lineSeparator());
 
-            
-            String [] lines = file_content.split(System.lineSeparator());
-            for (String line : lines) {
-                int heading_count = 0;
-                Boolean is_bold = false;
-                Boolean is_italic = false;
-                String current_word = "";
-                String formatted_line = "";
-                String[] characters = line.split("");
-                
-                while (heading_count < line.length() && line.charAt(heading_count) == '#') {
-                    heading_count++;
-                }
+            // repeat for each line in the original file
+            while (read_file.hasNextLine()) {
+                // read the next line of original data
+                String line_data = read_file.nextLine();
 
-                if (heading_count > 0) {
-                    start_tag = "<h" + heading_count + ">";
-                    end_tag = "</h" + heading_count + ">";
-                    line_data_trimmed = line.substring(heading_count).trim();
+                // split using spaces
+                String[] split_line = line_data.split("\\s+");
+
+                // take the tag from the first part of the line
+                String md_tag = split_line[0];
+
+                // convert md tag into html
+                if (md_tag.equals("#")) {
+                    // heading 1
+                    start_tag = "<h1>";
+                    end_tag = "</h1>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("##")) {
+                    // heading 2
+                    start_tag = "<h2>";
+                    end_tag = "</h2>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("###")) {
+                    // heading 3
+                    start_tag = "<h3>";
+                    end_tag = "</h3>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("####")) {
+                    // heading 4
+                    start_tag = "<h4>";
+                    end_tag = "</h4>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("**") || md_tag.equals("__")) {
+                    // bold
+                    start_tag = "<p><b>";
+                    end_tag = "</p></b>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("*") || md_tag.equals("_")) {
+                    // italic
+                    start_tag = "<p><i>";
+                    end_tag = "</p></i>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                } else if (md_tag.equals("***")) {
+                    // bold + italic
+                    start_tag = "<p><b><i>";
+                    end_tag = "</p></b></i>";
+                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
                 } else {
                     start_tag = "<p>";
                     end_tag = "</p>";
-                    line_data_trimmed = line.trim();
+                    line_data_trimmed = line_data;
                 }
+
+                // write the data to the output file
+                write_output.write(start_tag + line_data_trimmed + end_tag + System.lineSeparator());
             }
-
-
-            // // repeat for each line in the original file
-            // while (read_file.hasNextLine()) {
-            //     // read the next line of original data
-            //     String line_data = read_file.nextLine();
-
-            //     // split using spaces
-            //     String[] split_line = line_data.split("\\s+");
-
-            //     // take the tag from the first part of the line
-            //     String md_tag = split_line[0];
-
-            //     // convert md tag into html
-            //     if (md_tag.equals("#")) {
-            //         // heading 1
-            //         start_tag = "<h1>";
-            //         end_tag = "</h1>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1);
-            //     } else if (md_tag.equals("##")) {
-            //         // heading 2
-            //         start_tag = "<h2>";
-            //         end_tag = "</h2>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1);
-            //     } else if (md_tag.equals("###")) {
-            //         // heading 3
-            //         start_tag = "<h3>";
-            //         end_tag = "</h3>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1);
-            //     } else if (md_tag.equals("####")) {
-            //         // heading 4
-            //         start_tag = "<h4>";
-            //         end_tag = "</h4>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1);
-            //     } else if (md_tag.equals("**") || md_tag.equals("__")) {
-            //         // bold
-            //         start_tag = "<p><b>";
-            //         end_tag = "</p></b>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1, line_data.length() - 3);
-            //     } else if (md_tag.equals("*") || md_tag.equals("_")) {
-            //         // italic
-            //         start_tag = "<p><i>";
-            //         end_tag = "</p></i>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1, line_data.length() - 2);
-            //     } else if (md_tag.equals("***")) {
-            //         // bold + italic
-            //         start_tag = "<p><b><i>";
-            //         end_tag = "</p></b></i>";
-            //         line_data_trimmed = line_data.substring(md_tag.length() + 1, line_data.length() - 4);
-            //     } else {
-            //         start_tag = "<p>";
-            //         end_tag = "</p>";
-            //         line_data_trimmed = line_data;
-            //     }
-
-            //     // write the data to the output file
-            //     write_output.write(start_tag + line_data_trimmed + end_tag + System.lineSeparator());
-            // }
             write_output.write(html_file_end);
             System.out.println("Write completed");
             // close
