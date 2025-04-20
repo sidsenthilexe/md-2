@@ -33,20 +33,36 @@ public class md_2_html {
             String start_tag = "";
             String end_tag = "";
             String line_data_trimmed = "";
-            Boolean is_bold = false;
-            Boolean is_italic = false;
-            String current_word = "";
             String file_content = "";
             while (read_file.hasNextLine()) {
                 file_content += read_file.nextLine() + System.lineSeparator();
             }
+            System.out.print(file_content);
 
             write_output.write(html_file_start + System.lineSeparator());
 
-            String[] characters = file_content.split("");
-            for (String c : characters) {
-                if (c.equals("#")) {
-                    
+            
+            String [] lines = file_content.split(System.lineSeparator());
+            for (String line : lines) {
+                int heading_count = 0;
+                Boolean is_bold = false;
+                Boolean is_italic = false;
+                String current_word = "";
+                String formatted_line = "";
+                String[] characters = line.split("");
+                
+                while (heading_count < line.length() && line.charAt(heading_count) == '#') {
+                    heading_count++;
+                }
+
+                if (heading_count > 0) {
+                    start_tag = "<h" + heading_count + ">";
+                    end_tag = "</h" + heading_count + ">";
+                    line_data_trimmed = line.substring(heading_count).trim();
+                } else {
+                    start_tag = "<p>";
+                    end_tag = "</p>";
+                    line_data_trimmed = line.trim();
                 }
             }
 
