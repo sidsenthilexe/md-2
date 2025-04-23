@@ -32,7 +32,8 @@ public class md_2_html {
 
             String start_tag = "";
             String end_tag = "";
-            String line_data_trimmed = "";
+            String line_edited = "";
+            String assembly = "";
 
             write_output.write(html_file_start + System.lineSeparator());
 
@@ -52,45 +53,46 @@ public class md_2_html {
                     // heading 1
                     start_tag = "<h1>";
                     end_tag = "</h1>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                    line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("##")) {
                     // heading 2
                     start_tag = "<h2>";
                     end_tag = "</h2>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                    line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("###")) {
                     // heading 3
                     start_tag = "<h3>";
                     end_tag = "</h3>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                    line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("####")) {
                     // heading 4
                     start_tag = "<h4>";
                     end_tag = "</h4>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
-                } else if (md_tag.equals("**") || md_tag.equals("__")) {
-                    // bold
-                    start_tag = "<p><b>";
-                    end_tag = "</p></b>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
-                } else if (md_tag.equals("*") || md_tag.equals("_")) {
-                    // italic
-                    start_tag = "<p><i>";
-                    end_tag = "</p></i>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
-                } else if (md_tag.equals("***")) {
-                    // bold + italic
-                    start_tag = "<p><b><i>";
-                    end_tag = "</p></b></i>";
-                    line_data_trimmed = line_data.substring(md_tag.length() + 1);
+                    line_edited = line_data.substring(md_tag.length() + 1);
+                    line_edited = line_data.substring(md_tag.length() + 1);
                 } else {
                     start_tag = "<p>";
                     end_tag = "</p>";
-                    line_data_trimmed = line_data;
+                    line_edited = line_data;
                 }
 
+                // When looking at the string, (.+?) is the capture group, referenced by $1 in the replacement
+
+                String bi = line_edited.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*", "<b><i>$1</i></b>");
+                String b = bi.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
+                String b2 = b.replaceAll("\\_\\_(.+?)\\_\\_", "<b>$1</b>");
+                String i = b2.replaceAll("\\*(.+?)\\*", "<i>$1</i>");
+                String i2 = i.replaceAll("\\_(.+?)\\_", "<i>$1</i>");
+                String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
+                String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
+                String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");         
+                       
+                line_edited = c;
+                assembly = (start_tag + line_edited + end_tag + System.lineSeparator());
+                System.out.println(assembly);
+
                 // write the data to the output file
-                write_output.write(start_tag + line_data_trimmed + end_tag + System.lineSeparator());
+                write_output.write(assembly);
             }
             write_output.write(html_file_end);
             System.out.println("Write completed");
