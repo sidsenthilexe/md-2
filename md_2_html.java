@@ -76,7 +76,7 @@ public class md_2_html {
                     line_edited = line_data;
                 }
 
-                // When looking at the string, (.+?) is the capture group, referenced by $1 in the replacement
+                // When looking at the string, (.+?) is the capture group, referenced by $1 in the replacement, so anything in between is skipped
 
                 String bi = line_edited.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*", "<b><i>$1</i></b>");
                 String b = bi.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
@@ -86,7 +86,7 @@ public class md_2_html {
                 String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
                 String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
                 String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");         
-                       
+
                 line_edited = c;
                 assembly = (start_tag + line_edited + end_tag + System.lineSeparator());
                 System.out.println(assembly);
