@@ -85,9 +85,10 @@ public class md_2_html {
                 String i2 = i.replaceAll("\\_(.+?)\\_", "<i>$1</i>");
                 String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
                 String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
-                String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");         
+                String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");
+                String l = c.replaceAll("\\[(.+?)\\]\\((.+?)\\)", "<a href = \"$2\">$1</a>");
 
-                line_edited = c;
+                line_edited = l;
                 assembly = (start_tag + line_edited + end_tag + System.lineSeparator());
                 System.out.println(assembly);
 
