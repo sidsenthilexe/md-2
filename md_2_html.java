@@ -17,6 +17,14 @@ public class md_2_html {
             Scanner output_path_input = new Scanner(System.in);
             System.out.println("Enter the destination path (omitting .html): ");
             String output_path = output_path_input.nextLine() + ".html";
+
+            Scanner body_color_input = new Scanner(System.in);
+            System.out.println("Enter the body text color: ");
+            String body_color = body_color_input.nextLine();
+
+            Scanner head_color_input = new Scanner(System.in);
+            System.out.println("Enter the heading text color: ");
+            String head_color = head_color_input.nextLine();
             
             // point to the original file
             File file = new File(file_name);
@@ -51,27 +59,26 @@ public class md_2_html {
                 // convert md tag into html
                 if (md_tag.equals("#")) {
                     // heading 1
-                    start_tag = "<h1>";
+                    start_tag = "<h1 style = \"color:" + head_color + ";\">";
                     end_tag = "</h1>";
                     line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("##")) {
                     // heading 2
-                    start_tag = "<h2>";
+                    start_tag = "<h2 style = \"color:" + head_color + ";\">";
                     end_tag = "</h2>";
                     line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("###")) {
                     // heading 3
-                    start_tag = "<h3>";
+                    start_tag = "<h3 style = \"color:" + head_color + ";\">";
                     end_tag = "</h3>";
                     line_edited = line_data.substring(md_tag.length() + 1);
                 } else if (md_tag.equals("####")) {
                     // heading 4
-                    start_tag = "<h4>";
+                    start_tag = "<h4 style = \"color:" + head_color + ";\">";
                     end_tag = "</h4>";
                     line_edited = line_data.substring(md_tag.length() + 1);
-                    line_edited = line_data.substring(md_tag.length() + 1);
                 } else {
-                    start_tag = "<p>";
+                    start_tag = "<p style = \"color:" + body_color + ";\">";
                     end_tag = "</p>";
                     line_edited = line_data;
                 }
@@ -86,7 +93,7 @@ public class md_2_html {
                 String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
                 String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
                 String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");
-                String l = c.replaceAll("\\[(.+?)\\]\\((.+?)\\)", "<a href = \"$2\">$1</a>");
+                String l = c.replaceAll("\\[(.+?)\\]\\((.+?)\\)", "<a href = \"$2\" target\"_blank\">$1</a>");
 
                 line_edited = l;
                 assembly = (start_tag + line_edited + end_tag + System.lineSeparator());
@@ -102,6 +109,8 @@ public class md_2_html {
             read_file.close();
             write_output.close();
             output_path_input.close();
+            body_color_input.close();
+            head_color_input.close();
 
         } catch (FileNotFoundException exception) {
             System.out.println(exception);

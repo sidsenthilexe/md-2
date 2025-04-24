@@ -4,16 +4,8 @@
 
 ### Added
 
+- Colors for heading and body
 - Parse links
-
-### Changed
-
-### Removed
-
-## [Unreleased]
-
-### Added
-
 - Parsing headings
 - Parsing other tags
 - Add standard HTML start and end to every converted file
