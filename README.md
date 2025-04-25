@@ -5,4 +5,6 @@ A Java program to convert Markdown to HTML
 I finally started maintaining the [changelog](/CHANGELOG.md)!
 
 ## Usage
-Run `md_2_html.java`
+* Ensure that Java 21 is installed
+* Run `md-2.jar`
+* Alternatively, in the command line, run `java -jar md-2.jar`
