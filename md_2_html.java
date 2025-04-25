@@ -84,18 +84,22 @@ public class md_2_html {
                 }
 
                 // When looking at the string, (.+?) is the capture group, referenced by $1 in the replacement, so anything in between is skipped
+                String img = line_edited.replaceAll("\\!\\[(.+?)]\\((.+?)\\)", "<img src=\"$2\" alt=\"$1\">");
+                String l = img.replaceAll("\\[(.+?)\\]\\((.+?)\\)", "<a href=\"$2\" target\"_blank\">$1</a>");
+                if (l.contains("<a href=") || l.contains("<img src=")) {
+                    line_edited = l;
+                } else {
+                    String bi = line_edited.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*", "<b><i>$1</i></b>");
+                    String b = bi.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
+                    String b2 = b.replaceAll("\\_\\_(.+?)\\_\\_", "<b>$1</b>");
+                    String i = b2.replaceAll("\\*(.+?)\\*", "<i>$1</i>");
+                    String i2 = i.replaceAll("\\_(.+?)\\_", "<i>$1</i>");
+                    String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
+                    String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
+                    String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");
+                    line_edited = c;
+                }
 
-                String bi = line_edited.replaceAll("\\*\\*\\*(.+?)\\*\\*\\*", "<b><i>$1</i></b>");
-                String b = bi.replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>");
-                String b2 = b.replaceAll("\\_\\_(.+?)\\_\\_", "<b>$1</b>");
-                String i = b2.replaceAll("\\*(.+?)\\*", "<i>$1</i>");
-                String i2 = i.replaceAll("\\_(.+?)\\_", "<i>$1</i>");
-                String s = i2.replaceAll("\\~\\~(.+?)\\~\\~", "<s>$1</s>");
-                String s2 = s.replaceAll("\\~(.+?)\\~", "<s>$1</s>");
-                String c = s2.replaceAll("\\`(.+?)\\`", "<code>$1</code>");
-                String l = c.replaceAll("\\[(.+?)\\]\\((.+?)\\)", "<a href = \"$2\" target\"_blank\">$1</a>");
-
-                line_edited = l;
                 assembly = (start_tag + line_edited + end_tag + System.lineSeparator());
                 System.out.println(assembly);
 

@@ -4,6 +4,8 @@
 
 ### Added
 
+- Skip bold, etc parsing to prevent errors if the line was an image.
+- Parse images
 - Colors for heading and body
 - Parse links
 - Parsing headings
