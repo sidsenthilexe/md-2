@@ -2,7 +2,15 @@
 ![Language Badge](https://img.shields.io/badge/language-Java-f89820)
 # md-2
 A Java program to convert Markdown to HTML      
-I finally started maintaining the [changelog](/CHANGELOG.md)!
+
+## Features
+* Parse different levels of headings
+* Parse bolds, italics, and bold+italics (multiple tags)
+* Parse nested bolds and nested italics
+* Parse strikethroughs
+* Parse code lines
+* Parse links
+* Parse images
 
 ## Usage
 * Ensure that Java 21 is installed
